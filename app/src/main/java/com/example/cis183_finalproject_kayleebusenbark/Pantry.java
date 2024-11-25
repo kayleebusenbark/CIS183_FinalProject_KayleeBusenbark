@@ -1,9 +1,10 @@
 package com.example.cis183_finalproject_kayleebusenbark;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.MotionEvent;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -11,13 +12,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
 
@@ -29,11 +31,14 @@ public class Pantry extends AppCompatActivity implements View.OnClickListener
     Spinner sp_j_ingredients;
     ArrayAdapter<String> ingredientsAdapter;
     ArrayAdapter<String> measurementAdapter;
+    ArrayAdapter<String> ingredientCategoryAdapter;
+
 
     EditText et_j_quantity;
     Spinner sp_j_measurement;
     Button btn_j_removeIngredient;
     UserIngredient userIngredient;
+    TextView tv_j_addCustomIngredient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -45,6 +50,9 @@ public class Pantry extends AppCompatActivity implements View.OnClickListener
         //GUI CONNECTIONS
         layoutList = findViewById(R.id.ll_v_pantry);
         btn_addIngredient = findViewById(R.id.btn_pantry_v_addIngredient);
+        tv_j_addCustomIngredient = findViewById(R.id.tv_pantry_v_addNewIngredient);
+
+
         dbHelper = new DatabaseHelper(this);
 
         btn_addIngredient.setOnClickListener(this);
@@ -59,8 +67,87 @@ public class Pantry extends AppCompatActivity implements View.OnClickListener
         measurementList.add(0, "Units:");
         measurementAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, measurementList);
 
+
         loadPantryData(SessionData.getLoggedInUser().getUserId());
+
+        addNewIngredientClickListener();
     }
+
+    private void addNewIngredientClickListener()
+    {
+        tv_j_addCustomIngredient.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addIngredientDialog();
+            }
+        });
+    }
+
+    private void addIngredientDialog()
+    {
+        Dialog dialog = new Dialog(this);
+
+        dialog.setContentView(R.layout.dialogbox_add_new_ingredient);
+        dialog.setCancelable(true);
+
+        TextInputEditText tiet_j_ingredientName = dialog.findViewById(R.id.tiet_dialog_addNewIngredient);
+        Spinner sp_j_ingredientCategory = dialog.findViewById(R.id.sp_dialog_addNewIngredient);
+        Button btn_j_add = dialog.findViewById(R.id.btn_dialog_add);
+        Button btn_j_back = dialog.findViewById(R.id.btn_dialog_back);
+
+        //spinner for categories
+        ArrayList<String> categoryList = dbHelper.getAllIngredientCategoriesForSpinner();
+        categoryList.add(0, "Select Category:");
+        ingredientCategoryAdapter = new ArrayAdapter<>(this,android.R.layout.simple_spinner_dropdown_item, categoryList);
+        sp_j_ingredientCategory.setAdapter(ingredientCategoryAdapter);
+
+        btn_j_add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                String ingredientName = tiet_j_ingredientName.getText().toString().trim();
+
+                if(ingredientName.isEmpty())
+                {
+                    Toast.makeText(Pantry.this, "Ingredient name cannot be empty", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                ArrayList<String> existingIngredientNames = dbHelper.getAllIngredientNamesForSpinner();
+                if(existingIngredientNames.contains(ingredientName))
+                {
+                    Toast.makeText(Pantry.this, "Ingredient name already exists", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                int selectedCategoryPosition = sp_j_ingredientCategory.getSelectedItemPosition();
+                if(selectedCategoryPosition == 0)
+                {
+                    Toast.makeText(Pantry.this, "Please select a category", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                String selectedCategory = sp_j_ingredientCategory.getSelectedItem().toString();
+                int categoryId = dbHelper.getIngredientCategoryIdByName(selectedCategory);
+
+                if(!ingredientName.isEmpty() && selectedCategoryPosition != 0)
+                {
+                    dbHelper.addIngredient(ingredientName, categoryId);
+                    ingredientsAdapter.add(ingredientName);
+                    ingredientsAdapter.notifyDataSetChanged();
+                    dialog.dismiss();
+
+                    Toast.makeText(Pantry.this, "Ingredient added", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+
+        btn_j_back.setOnClickListener(view -> dialog.dismiss());
+
+        dialog.show();
+
+    }
+
 
 
     private void addView(UserIngredient userIngredient)
@@ -69,7 +156,7 @@ public class Pantry extends AppCompatActivity implements View.OnClickListener
 
         View ingredientView = getLayoutInflater().inflate(R.layout.row_add_pantry, null, false);
 
-        sp_j_ingredients = ingredientView.findViewById(R.id.sp_pantry_v_ingredients);
+        sp_j_ingredients = ingredientView.findViewById(R.id.sp_dialog_addNewIngredient);
         et_j_quantity = ingredientView.findViewById(R.id.et_pantry_v_quantity);
         sp_j_measurement = ingredientView.findViewById(R.id.sp_pantry_v_measurement);
         btn_j_removeIngredient = ingredientView.findViewById(R.id.btn_pantry_v_removeIngredient);
@@ -79,7 +166,7 @@ public class Pantry extends AppCompatActivity implements View.OnClickListener
         for(int i = 0; i < layoutList.getChildCount(); i++)
         {
             View childView = layoutList.getChildAt(i);
-            Spinner existingSpinner = childView.findViewById(R.id.sp_pantry_v_ingredients);
+            Spinner existingSpinner = childView.findViewById(R.id.sp_dialog_addNewIngredient);
             existingSpinner.setEnabled(false);
         }
         sp_j_ingredients.setEnabled(true);
@@ -169,7 +256,7 @@ public class Pantry extends AppCompatActivity implements View.OnClickListener
                 toggleAddButtonState();
             }
         });
-        
+
         layoutList.addView(ingredientView);
     }
 
@@ -177,7 +264,6 @@ public class Pantry extends AppCompatActivity implements View.OnClickListener
     {
         layoutList.removeView(view);
     }
-
 
     @Override
     public void onClick(View view)
@@ -201,7 +287,7 @@ public class Pantry extends AppCompatActivity implements View.OnClickListener
         for (int i= 0; i< layoutList.getChildCount(); i++)
         {
             View childView = layoutList.getChildAt(i);
-            sp_j_ingredients = childView.findViewById(R.id.sp_pantry_v_ingredients);
+            sp_j_ingredients = childView.findViewById(R.id.sp_dialog_addNewIngredient);
             et_j_quantity = childView.findViewById(R.id.et_pantry_v_quantity);
             sp_j_measurement = childView.findViewById(R.id.sp_pantry_v_measurement);
 

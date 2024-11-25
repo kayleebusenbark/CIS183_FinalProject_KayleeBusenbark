@@ -48,7 +48,7 @@
         tools:ignore="ExtraText,MissingConstraints">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/tiet_v_userInfo_fname"
+            android:id="@+id/tiet_dialog_addNewIngredient"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="First Name" />

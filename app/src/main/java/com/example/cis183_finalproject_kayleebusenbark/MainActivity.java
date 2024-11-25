@@ -29,7 +29,8 @@ public class MainActivity extends AppCompatActivity
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
@@ -74,7 +75,8 @@ public class MainActivity extends AppCompatActivity
 
     private void loginButtonClickListener()
     {
-        btn_j_login.setOnClickListener(new View.OnClickListener() {
+        btn_j_login.setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View view)
             {
@@ -101,7 +103,8 @@ public class MainActivity extends AppCompatActivity
 
     private void registerOnClickListener()
     {
-        tv_j_register.setOnClickListener(new View.OnClickListener() {
+        tv_j_register.setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View view)
             {

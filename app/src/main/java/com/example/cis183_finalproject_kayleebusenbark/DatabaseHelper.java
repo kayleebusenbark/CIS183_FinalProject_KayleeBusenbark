@@ -583,6 +583,26 @@ public class DatabaseHelper extends SQLiteOpenHelper
         return ingredientNamesList;
     }
 
+    public ArrayList<String> getAllIngredientCategoriesForSpinner()
+    {
+        ArrayList<String> ingredientCategoriesList = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("SELECT ingredientCategoryType FROM " + ingredientCategory_table_name, null);
+
+        while(cursor.moveToNext())
+        {
+            String ingredientCategoryType = cursor.getString(0);
+            ingredientCategoriesList.add(ingredientCategoryType);
+        }
+        cursor.close();
+        db.close();
+
+        return ingredientCategoriesList;
+    }
+
+
     public ArrayList<String> getAllMeasurementsForSpinner()
     {
         ArrayList<String> measurementList = new ArrayList<>();
@@ -690,6 +710,28 @@ public class DatabaseHelper extends SQLiteOpenHelper
         return measurementId;
     }
 
+    public int getIngredientCategoryIdByName(String categoryName)
+    {
+        int ingredientCategoryId = -1;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selectStatement = "SELECT ingredientCategoryId FROM " + ingredientCategory_table_name + " WHERE ingredientCategoryType = '" + categoryName + "';";
+
+        Cursor cursor = db.rawQuery(selectStatement, null);
+
+        if(cursor != null)
+        {
+            cursor.moveToFirst();
+            ingredientCategoryId = cursor.getInt(0);
+
+        }
+        cursor.close();
+        db.close();
+        return ingredientCategoryId;
+    }
+
+
     //CRUD FOR USER INGREDIENTS
     public ArrayList<UserIngredient> getUserIngredients(int userId)
     {
@@ -759,25 +801,19 @@ public class DatabaseHelper extends SQLiteOpenHelper
 
     //CRUD FOR INGREDIENTS
     //we want update and add
+    public void addIngredient(String name, int categoryId)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
 
+        ContentValues values = new ContentValues();
 
+        values.put("ingredientName", name);
+        values.put("ingredientCategoryId", categoryId);
 
+        db.insert(ingredients_table_name, null, values);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        getAllIngredientNamesForSpinner();
+        db.close();
+    }
 
 }

@@ -46,8 +46,19 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="40dp"
         android:text="Search for Recipes"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_pantry_v_addIngredient" />
+
+    <TextView
+        android:id="@+id/tv_pantry_v_addNewIngredient"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add custom ingredient"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_pantry_v_addIngredient" />

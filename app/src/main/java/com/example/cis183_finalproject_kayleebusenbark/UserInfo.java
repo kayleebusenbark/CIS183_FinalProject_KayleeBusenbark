@@ -30,7 +30,7 @@ public class UserInfo extends AppCompatActivity
 
         //GUI Connections
         tiet_j_username = findViewById(R.id.tiet_v_userInfo_username);
-        tiet_j_fname = findViewById(R.id.tiet_v_userInfo_fname);
+        tiet_j_fname = findViewById(R.id.tiet_dialog_addNewIngredient);
         tiet_j_lname = findViewById(R.id.tiet_v_userInfo_lname);
         tiet_j_password = findViewById(R.id.tiet_v_userInfo_password);
         btn_update = findViewById(R.id.btn_v_userInfo_update);

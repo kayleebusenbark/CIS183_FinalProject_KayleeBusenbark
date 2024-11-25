@@ -7,7 +7,7 @@
     android:paddingBottom="5dp">
 
     <Spinner
-        android:id="@+id/sp_pantry_v_ingredients"
+        android:id="@+id/sp_dialog_addNewIngredient"
         android:layout_width="175dp"
         android:layout_height="50dp"
         android:layout_marginLeft="10dp"
