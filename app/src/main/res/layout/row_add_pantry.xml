@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp">
+
+    <Spinner
+        android:id="@+id/sp_pantry_v_ingredients"
+        android:layout_width="175dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" ></Spinner>
+
+    <EditText
+
+        android:id="@+id/et_pantry_v_quantity"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginRight="10dp"></EditText>
+
+    <Spinner
+        android:id="@+id/sp_pantry_v_measurement"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginRight="10dp"></Spinner>
+
+    <Button
+        android:id="@+id/btn_pantry_v_removeIngredient"
+        android:layout_width="45dp"
+        android:layout_height="50dp"
+        android:layout_marginRight="10dp"
+        android:text="x"
+        android:textColor="@color/white"
+        android:textSize="20dp"></Button>
+
+</LinearLayout>
