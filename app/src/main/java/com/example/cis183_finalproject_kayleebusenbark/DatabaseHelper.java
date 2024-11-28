@@ -27,9 +27,8 @@ public class DatabaseHelper extends SQLiteOpenHelper
 
     public DatabaseHelper(Context c)
     {
-        super(c, database_name, null, 11);
+        super(c, database_name, null, 16);
     }
-
 
     @Override
     public void onCreate(SQLiteDatabase db)
@@ -419,13 +418,6 @@ public class DatabaseHelper extends SQLiteOpenHelper
         if(countRecordsFromTable(userIngredients_table_name) == 0)
         {
             SQLiteDatabase db = this.getWritableDatabase();
-
-            db.execSQL("INSERT INTO " + userIngredients_table_name + "(userId, ingredientId, userIngredientQuantity, measurementId) VALUES (1, 2, 3, 10)");
-            db.execSQL("INSERT INTO " + userIngredients_table_name + "(userId, ingredientId, userIngredientQuantity, measurementId) VALUES (1, 2, 3, 10)");
-            db.execSQL("INSERT INTO " + userIngredients_table_name + "(userId, ingredientId, userIngredientQuantity, measurementId) VALUES (1, 2, 3, 10)");
-            db.execSQL("INSERT INTO " + userIngredients_table_name + "(userId, ingredientId, userIngredientQuantity, measurementId) VALUES (1, 2, 3, 10)");
-
-            db.execSQL("INSERT INTO " + userIngredients_table_name + "(userId, ingredientId, userIngredientQuantity, measurementId) VALUES (3, 29, 1, 7)");
         }
     }
 
@@ -815,5 +807,33 @@ public class DatabaseHelper extends SQLiteOpenHelper
         getAllIngredientNamesForSpinner();
         db.close();
     }
+
+    //recipes
+
+//    public ArrayList<Recipe> getAllRecipes()
+//    {
+//        SQLiteDatabase db = this.getReadableDatabase();
+//
+//        String selectStatment = "SELECT * FROM " + recipes_table_name;
+//
+//        Cursor cursor = db.rawQuery(selectStatment, null);
+//
+//        if(cursor != null)
+//        {
+//            do{
+//                cursor.moveToFirst();
+//
+//                int userIngredientId = cursor.getInt(0);
+//                //int userId = cursor.getInt(1);
+//                int ingredientId = cursor.getInt(2);
+//                float quantity = cursor.getFloat(3);
+//                int measurementId = cursor.getInt(4);
+//
+//                int recipeId = cursor.getInt(0);
+//                String recipeTitle = cursor.getString()
+//            }
+//        }
+//    }
+
 
 }

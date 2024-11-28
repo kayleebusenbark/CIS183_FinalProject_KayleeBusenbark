@@ -10,7 +10,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,20 +27,25 @@ import java.util.ArrayList;
 
 public class Pantry extends AppCompatActivity implements View.OnClickListener
 {
+
     DatabaseHelper dbHelper;
     LinearLayout layoutList;
     Button btn_addIngredient;
-    Spinner sp_j_ingredients;
+    TextView tv_j_ingredientSel;
     ArrayAdapter<String> ingredientsAdapter;
     ArrayAdapter<String> measurementAdapter;
     ArrayAdapter<String> ingredientCategoryAdapter;
 
-
     EditText et_j_quantity;
     Spinner sp_j_measurement;
-    Button btn_j_removeIngredient;
+    ImageView iv_j_removeIngredient;
     UserIngredient userIngredient;
     TextView tv_j_addCustomIngredient;
+
+    Dialog searchPopup;
+    EditText popup_search;
+    ListView popup_listView;
+    ArrayAdapter<String> popup_adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -57,11 +64,6 @@ public class Pantry extends AppCompatActivity implements View.OnClickListener
 
         btn_addIngredient.setOnClickListener(this);
 
-        //spinner for ingredients
-        ArrayList<String> ingredientNameList = dbHelper.getAllIngredientNamesForSpinner();
-        ingredientNameList.add(0, "Ingredients:");
-        ingredientsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, ingredientNameList);
-
         //spinner for measurements
         ArrayList<String> measurementList = dbHelper.getAllMeasurementsForSpinner();
         measurementList.add(0, "Units:");
@@ -69,8 +71,125 @@ public class Pantry extends AppCompatActivity implements View.OnClickListener
 
 
         loadPantryData(SessionData.getLoggedInUser().getUserId());
-
         addNewIngredientClickListener();
+}
+
+    private void selectIngredientOnClickListerner()
+    {
+        tv_j_ingredientSel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                searchPopup = new Dialog(Pantry.this);
+
+                searchPopup.setContentView(R.layout.custom_spinner_ingredients);
+
+                searchPopup.getWindow().setLayout(700, 1000);
+
+                searchPopup.show();
+
+                popup_search = searchPopup.findViewById(R.id.et_search);
+                popup_listView = searchPopup.findViewById(R.id.lv_ingredients);
+
+                popup_adapter = new ArrayAdapter<>(Pantry.this, android.R.layout.simple_list_item_1, dbHelper.getAllIngredientNamesForSpinner());
+
+                popup_listView.setAdapter(popup_adapter);
+
+                popupEditTextChangeListener();
+
+                popupClickListener();
+            }
+        });
+    }
+
+    private void listenersForUpdateandAdd()
+    {
+        et_j_quantity.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2)
+            {
+                updateOrAddIngredient();
+                toggleAddButtonState();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        tv_j_ingredientSel.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2)
+            {
+                updateOrAddIngredient();
+                toggleAddButtonState();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+        sp_j_measurement.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
+            {
+                updateOrAddIngredient();
+                toggleAddButtonState();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+    }
+
+    private void popupEditTextChangeListener()
+    {
+        popup_search.addTextChangedListener(new TextWatcher()
+        {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2)
+            {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2)
+            {
+                popup_adapter.getFilter().filter(charSequence);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+    }
+
+    private void popupClickListener()
+    {
+        popup_listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
+            {
+                tv_j_ingredientSel.setText(popup_adapter.getItem(i));;
+
+                searchPopup.dismiss();
+            }
+        });
     }
 
     private void addNewIngredientClickListener()
@@ -148,28 +267,29 @@ public class Pantry extends AppCompatActivity implements View.OnClickListener
 
     }
 
-
-
     private void addView(UserIngredient userIngredient)
     {
         this.userIngredient = userIngredient;
 
         View ingredientView = getLayoutInflater().inflate(R.layout.row_add_pantry, null, false);
 
-        sp_j_ingredients = ingredientView.findViewById(R.id.sp_dialog_addNewIngredient);
+        tv_j_ingredientSel = ingredientView.findViewById(R.id.tv_pantry_v_addNewIngredient);
         et_j_quantity = ingredientView.findViewById(R.id.et_pantry_v_quantity);
         sp_j_measurement = ingredientView.findViewById(R.id.sp_pantry_v_measurement);
-        btn_j_removeIngredient = ingredientView.findViewById(R.id.btn_pantry_v_removeIngredient);
-        sp_j_ingredients.setAdapter(ingredientsAdapter);
+        iv_j_removeIngredient = ingredientView.findViewById(R.id.iv_pantry_v_removeIngredient);
         sp_j_measurement.setAdapter(measurementAdapter);
+
+        //ingredientView.setTag(userIngredient);
 
         for(int i = 0; i < layoutList.getChildCount(); i++)
         {
             View childView = layoutList.getChildAt(i);
-            Spinner existingSpinner = childView.findViewById(R.id.sp_dialog_addNewIngredient);
-            existingSpinner.setEnabled(false);
+            TextView existingIngredient = childView.findViewById(R.id.tv_pantry_v_addNewIngredient);
+            existingIngredient.setEnabled(false);
         }
-        sp_j_ingredients.setEnabled(true);
+        ingredientView.setTag(userIngredient);
+
+        tv_j_ingredientSel.setEnabled(true);
 
         if(userIngredient != null )
         {
@@ -183,65 +303,15 @@ public class Pantry extends AppCompatActivity implements View.OnClickListener
                 et_j_quantity.setText(String.valueOf(userIngredient.getQuantity()));
             }
 
-            int ingredientIndex = ingredientsAdapter.getPosition(dbHelper.getIngredientNameById(userIngredient.getIngredientId()));
-            sp_j_ingredients.setSelection(ingredientIndex);
+            tv_j_ingredientSel.setText(dbHelper.getIngredientNameById(userIngredient.getIngredientId()));
 
-            sp_j_ingredients.setEnabled(false);
+            tv_j_ingredientSel.setEnabled(false);
 
             // Set selected item in measurement spinner
             int measurementIndex = measurementAdapter.getPosition(dbHelper.getMeasurementNamebyId(userIngredient.getMeasurementId()));
             sp_j_measurement.setSelection(measurementIndex);
         }
-
-        et_j_quantity.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2)
-            {
-                updateOrAddIngredient();
-                toggleAddButtonState();
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-
-        sp_j_ingredients.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
-            {
-                updateOrAddIngredient();
-                toggleAddButtonState();
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-        sp_j_measurement.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
-            {
-                updateOrAddIngredient();
-                toggleAddButtonState();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
-
-        btn_j_removeIngredient.setOnClickListener(new View.OnClickListener()
+        iv_j_removeIngredient.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
@@ -256,6 +326,7 @@ public class Pantry extends AppCompatActivity implements View.OnClickListener
                 toggleAddButtonState();
             }
         });
+        listenersForUpdateandAdd();
 
         layoutList.addView(ingredientView);
     }
@@ -269,6 +340,8 @@ public class Pantry extends AppCompatActivity implements View.OnClickListener
     public void onClick(View view)
     {
         addView(null);
+        selectIngredientOnClickListerner();
+
     }
 
     private void loadPantryData(int userId)
@@ -287,11 +360,11 @@ public class Pantry extends AppCompatActivity implements View.OnClickListener
         for (int i= 0; i< layoutList.getChildCount(); i++)
         {
             View childView = layoutList.getChildAt(i);
-            sp_j_ingredients = childView.findViewById(R.id.sp_dialog_addNewIngredient);
+            tv_j_ingredientSel = childView.findViewById(R.id.tv_pantry_v_addNewIngredient);
             et_j_quantity = childView.findViewById(R.id.et_pantry_v_quantity);
             sp_j_measurement = childView.findViewById(R.id.sp_pantry_v_measurement);
 
-            boolean isValid = !et_j_quantity.getText().toString().isEmpty() &&!et_j_quantity.getText().toString().equals("0") && sp_j_ingredients.getSelectedItemPosition() != 0 && sp_j_measurement.getSelectedItemPosition() !=0;
+            boolean isValid = !et_j_quantity.getText().toString().isEmpty() &&!et_j_quantity.getText().toString().equals("0") && !tv_j_ingredientSel.getText().toString().isEmpty() && sp_j_measurement.getSelectedItemPosition() !=0;
 
             isAllValid &= isValid;
         }
@@ -301,17 +374,17 @@ public class Pantry extends AppCompatActivity implements View.OnClickListener
 
     private void updateOrAddIngredient()
     {
-        int ingredientPosition = sp_j_ingredients.getSelectedItemPosition();
+        String ingredientPosition = tv_j_ingredientSel.getText().toString();
         String quantityText = et_j_quantity.getText().toString();
         int measurementPosition = sp_j_measurement.getSelectedItemPosition();
 
-        if(ingredientPosition != 0 && !quantityText.isEmpty() && !quantityText.equals("0") && measurementPosition != 0)
+        if(!ingredientPosition.isEmpty() && !quantityText.isEmpty() && !quantityText.equals("0") && measurementPosition != 0)
         {
             try
             {
                 float quantity = Float.parseFloat(quantityText);
 
-                int ingredientId = dbHelper.getIngredientIdByName(sp_j_ingredients.getSelectedItem().toString());
+                int ingredientId = dbHelper.getIngredientIdByName(ingredientPosition);
                 int measurementId = dbHelper.getMeasurementIdByName(sp_j_measurement.getSelectedItem().toString());
 
                 if(userIngredient != null )
