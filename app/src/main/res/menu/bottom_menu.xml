@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/bottom_pantry"
+        android:icon="@drawable/baseline_view_list_24"
+        android:title="Pantry"/>
+
+
+    <item
+        android:id="@+id/bottom_addRecipe"
+        android:icon="@drawable/baseline_local_dining_24"
+        android:title="Add Recipe"/>
+
+    <item
+        android:id="@+id/bottom_recipeBook"
+        android:icon="@drawable/baseline_menu_book_24"
+        android:title="Recipe Book"/>
+
+    <item
+        android:id="@+id/bottom_profile"
+        android:icon="@drawable/baseline_person_24"
+        android:title="Profile"/>
+
+
+
+</menu>

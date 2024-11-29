@@ -1,5 +1,6 @@
 package com.example.cis183_finalproject_kayleebusenbark;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.Button;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class UserInfo extends AppCompatActivity
@@ -27,6 +29,34 @@ public class UserInfo extends AppCompatActivity
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_user_info);
+
+        //NAV BAR
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setSelectedItemId(R.id.bottom_profile);
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+            if(itemId == R.id.bottom_pantry)
+            {
+                startActivity(new Intent(getApplicationContext(), Pantry.class));
+                return true;
+            }
+            else if(itemId == R.id.bottom_addRecipe)
+            {
+                startActivity(new Intent(getApplicationContext(), AddRecipe.class));
+                return true;
+            }
+            else if(itemId == R.id.bottom_recipeBook)
+            {
+                startActivity(new Intent(getApplicationContext(), ViewRecipes.class));
+
+                return true;
+            }
+            else if(itemId == R.id.bottom_profile)
+            {
+                return true;
+            }
+            return false;
+        });
 
         //GUI Connections
         tiet_j_username = findViewById(R.id.tiet_v_userInfo_username);
