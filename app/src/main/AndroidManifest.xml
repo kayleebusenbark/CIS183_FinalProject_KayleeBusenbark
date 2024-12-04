@@ -13,6 +13,18 @@
         android:theme="@style/Theme.CIS183_FinalProject_KayleeBusenbark"
         tools:targetApi="31">
         <activity
+            android:name=".SearchResults"
+            android:exported="false" />
+        <activity
+            android:name=".RecipeDetails"
+            android:exported="false" />
+        <activity
+            android:name=".MyRecipes"
+            android:exported="false" />
+        <activity
+            android:name=".MyFavorites"
+            android:exported="false" />
+        <activity
             android:name=".ViewRecipes"
             android:exported="false" />
         <activity

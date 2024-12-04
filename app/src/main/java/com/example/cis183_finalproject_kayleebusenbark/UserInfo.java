@@ -71,6 +71,8 @@ public class UserInfo extends AppCompatActivity
 
         initUserInfo();
         updateUserInfoEventListener();
+        deleteUserEventListener();
+        loggOutUseEventListener();
     }
 
     private void initUserInfo()
@@ -108,11 +110,34 @@ public class UserInfo extends AppCompatActivity
 
                     dbHelper.updateUserInfo(updatedUser);
                     SessionData.setLoggedInUser(updatedUser);
-
-                    Log.e("Update", "Update");
                 }
             }
         });
     }
+
+    private void deleteUserEventListener()
+    {
+        btn_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                //you will delete the recipes associated with your userId when you delete your account
+                dbHelper.deleteUser(SessionData.getLoggedInUser().getUserId());
+                startActivity(new Intent(UserInfo.this, MainActivity.class));
+            }
+        });
+    }
+
+    private void loggOutUseEventListener()
+    {
+        btn_loggout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(UserInfo.this, MainActivity.class));
+            }
+        });
+    }
+
+
 
 }

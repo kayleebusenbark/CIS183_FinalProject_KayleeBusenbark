@@ -120,15 +120,31 @@
             android:inputType="textPassword" />
 
     </com.google.android.material.textfield.TextInputLayout>
+    '
+
+    <TextView
+        android:id="@+id/tv_v_createAccount_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="414dp"
+        android:layout_marginEnd="65dp"
+        android:layout_marginBottom="298dp"
+        android:text="Already have an account? Click here to login"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btn_v_register_register"
         android:layout_width="192dp"
         android:layout_height="60dp"
         android:layout_marginStart="109dp"
-        android:layout_marginTop="433dp"
+        android:layout_marginTop="441dp"
         android:layout_marginEnd="110dp"
-        android:layout_marginBottom="238dp"
+        android:layout_marginBottom="230dp"
         android:backgroundTint="#2E6F40"
         android:text="Register"
         android:textColorLink="#4CAF50"

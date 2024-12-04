@@ -85,7 +85,10 @@ public class MainActivity extends AppCompatActivity
 
                 if(dbHelper.isLoginValid(username, password))
                 {
-                    dbHelper.getAllUserDataGivenUsername(username);
+                    User loggedInUser = dbHelper.getAllUserDataGivenUsername(username);
+
+                    SessionData.setLoggedInUser(loggedInUser);
+
                     Log.e("Login", "Success");
                     tv_j_error.setVisibility(View.INVISIBLE);
                     startActivity(intent_j_pantry);

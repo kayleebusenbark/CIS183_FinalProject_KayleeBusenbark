@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddRecipe">
+    tools:context=".RecipeDetails">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -25,13 +25,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Create New Recipe"
+                android:text="Recipe Details"
                 android:textSize="34sp"
                 android:textStyle="bold"
                 android:gravity="center_horizontal"/>
 
             <EditText
-                android:id="@+id/et_v_addRecipe_recipeTitle"
+                android:id="@+id/et_v_recipeDetails_recipeTitle"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="8dp"
@@ -40,7 +40,7 @@
                 android:inputType="text"/>
 
             <EditText
-                android:id="@+id/et_v_addRecipe_Instructions"
+                android:id="@+id/et_v_recipeDetails_Instructions"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -65,22 +65,24 @@
                     android:layout_height="50dp"
                     android:layout_weight="1"/>
                 <Spinner
-                    android:id="@+id/sp_v_addRecipe_recipeCategory"
+                    android:id="@+id/sp_v_recipeDetails_recipeCategory"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="25"
                     android:layout_marginEnd="5dp"/>
                 <EditText
-                    android:id="@+id/et_v_addRecipe_prepTime"
-                    android:layout_width="100dp"
+                    android:id="@+id/et_v_recipeDetails_prepTime"
+                    android:layout_width="90dp"
                     android:layout_height="50dp"
+                    android:layout_weight="1"
+
                     android:hint="Prep Time"
                     android:inputType="text"
                     android:layout_marginEnd="5dp"/>
 
                 <Spinner
-                    android:id="@+id/sp_v_addRecipe_prepTimeCategory"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/sp_v_recipeDetails_prepTimeCategory"
+                    android:layout_width="110dp"
                     android:layout_height="50dp"
                     android:layout_marginStart="5dp"/>
 
@@ -88,34 +90,31 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ll_v_addRecipe"
+                android:id="@+id/ll_v_recipeDetails"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:orientation="vertical"/>
 
+
             <Button
-                android:id="@+id/btn_v_addRecipe_addAnotherIngredient"
+                android:id="@+id/btn_v_recipeDetails_edit"
                 android:backgroundTint="#2E6F40"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:layout_marginTop="36dp"
                 android:layout_gravity="center"
-                android:text="Add Another Ingredient"
+                android:text="Edit Recipe"
                 app:layout_constraintTop_toBottomOf = "@+id/ll_v_recipeDetails"
                 app:layout_constraintStart_toStartOf = "parent"
                 app:layout_constraintEnd_toEndOf = "parent"/>
-            <Button
-                android:id="@+id/btn_v_addRecipe_addToRecipeBook"
-                android:backgroundTint="#2E6F40"
+            <TextView
+                android:id="@+id/tv_v_recipeDetails_addToFavorites"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="   Add To Recipe Book   "
-                app:layout_constraintTop_toBottomOf = "@+id/ll_v_recipeDetails"
-                app:layout_constraintStart_toStartOf = "parent"
-                app:layout_constraintEnd_toEndOf = "parent"/>
+                android:text="Add To Favorites"
+                android:textStyle="bold" />
 
         </LinearLayout>
 

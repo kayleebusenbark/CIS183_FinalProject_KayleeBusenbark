@@ -23,22 +23,23 @@
     <EditText
 
         android:id="@+id/et_pantry_v_quantity"
-        android:layout_width="50dp"
+        android:layout_width="0dp"
         android:layout_height="50dp"
+        android:layout_weight="1"
         android:layout_marginRight="10dp"
         android:background="@android:drawable/editbox_background"></EditText>
 
     <Spinner
         android:id="@+id/sp_pantry_v_measurement"
         android:background="@android:drawable/editbox_background"
-
-        android:layout_width="100dp"
+        android:layout_weight="1"
+        android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginRight="10dp"></Spinner>
 
     <ImageView
         android:id="@+id/iv_pantry_v_removeIngredient"
-        android:layout_width="20dp"
+        android:layout_width="30dp"
         android:layout_height="50dp"
         android:layout_marginRight="10dp"
         android:src="@android:drawable/ic_menu_close_clear_cancel"

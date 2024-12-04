@@ -7,63 +7,68 @@
     android:layout_height="match_parent"
     tools:context=".Pantry">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:text="Add to Pantry"
-        android:textSize="34sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/ll_v_pantry"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.842" />
 
-    <LinearLayout
-        android:id="@+id/ll_v_pantry"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="88dp"
-        android:orientation="vertical"
+        android:layout_height="0dp"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="0dp"></LinearLayout>
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView">
 
-    <Button
-        android:id="@+id/btn_pantry_v_addIngredient"
-        android:backgroundTint="#2E6F40"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_marginTop="36dp"
-        android:text="Add Ingredient"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ll_v_pantry" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <Button
-        android:id="@+id/button"
-        android:backgroundTint="#2E6F40"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:text="Search for Recipes"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_pantry_v_addIngredient" />
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
 
-    <TextView
-        android:id="@+id/tv_pantry_v_addNewIngredient"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add custom ingredient"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_pantry_v_addIngredient" />
+                android:text="Add to Pantry"
+                android:textSize="34sp"
+                android:textStyle="bold"
+                android:layout_gravity="center_horizontal"/>
+
+            <LinearLayout
+                android:id="@+id/ll_v_pantry"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="vertical"
+                tools:layout_editor_absoluteX="0dp"></LinearLayout>
+
+
+
+            <Button
+                android:id="@+id/btn_pantry_v_addIngredient"
+                android:backgroundTint="#2E6F40"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="   Add Ingredient    "
+                android:layout_gravity="center_horizontal"/>
+            <TextView
+                android:id="@+id/tv_pantry_v_addNewIngredient"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:text="Add custom ingredient"
+                android:textStyle="bold" />
+            <Button
+                android:id="@+id/btn_v_pantry_searchForRecipes"
+                android:backgroundTint="#2E6F40"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Search for Recipes"
+                android:layout_gravity="center_horizontal"/>
+
+
+        </LinearLayout>
+    </ScrollView>
+
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"

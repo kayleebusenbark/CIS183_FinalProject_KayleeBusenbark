@@ -25,6 +25,7 @@ public class RegisterNewUser extends AppCompatActivity
     TextInputEditText tiet_j_password;
     TextView tv_j_usernameError;
     Button btn_j_register;
+    TextView tv_j_backtoLogin;
 
     Intent intent_j_login;
 
@@ -42,6 +43,7 @@ public class RegisterNewUser extends AppCompatActivity
         tiet_j_password = findViewById(R.id.tiet_v_register_password);
         tv_j_usernameError = findViewById(R.id.tv_v_register_usernameError);
         btn_j_register = findViewById(R.id.btn_v_register_register);
+        tv_j_backtoLogin = findViewById(R.id.tv_v_createAccount_login);
 
         intent_j_login = new Intent(RegisterNewUser.this, MainActivity.class);
 
@@ -51,6 +53,7 @@ public class RegisterNewUser extends AppCompatActivity
 
         userNameKeyEventListener();
         registerButtonOnClickListener();
+        backToLoginEventClickListener();
     }
 
     private void userNameKeyEventListener()
@@ -121,6 +124,17 @@ public class RegisterNewUser extends AppCompatActivity
             }
         });
     }
+
+    private void backToLoginEventClickListener()
+    {
+        tv_j_backtoLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(RegisterNewUser.this, MainActivity.class));
+            }
+        });
+    }
+
 
 
 

@@ -42,7 +42,9 @@ public class Pantry extends AppCompatActivity implements View.OnClickListener
 
     TextView tv_j_addCustomIngredient;
     TextView tv_j_selIngredient;
-    ArrayList<String> ingredientNames;
+    //ArrayList<String> ingredientNames;
+
+    Button btn_j_search;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -51,39 +53,12 @@ public class Pantry extends AppCompatActivity implements View.OnClickListener
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_pantry);
 
-        //NAV BAR
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
-        bottomNavigationView.setSelectedItemId(R.id.bottom_pantry);
-        bottomNavigationView.setOnItemSelectedListener(item -> {
-            int itemId = item.getItemId();
-            if(itemId == R.id.bottom_pantry)
-            {
-                return true;
-            }
-            else if(itemId == R.id.bottom_addRecipe)
-            {
-                startActivity(new Intent(getApplicationContext(), AddRecipe.class));
-
-                return true;
-            }
-            else if(itemId == R.id.bottom_recipeBook)
-            {
-                startActivity(new Intent(getApplicationContext(), ViewRecipes.class));
-
-                return true;
-            }
-            else if(itemId == R.id.bottom_profile)
-            {
-                startActivity(new Intent(getApplicationContext(), UserInfo.class));
-                return true;
-            }
-            return false;
-        });
-
+        bottomNavBarSetUp();
         //GUI CONNECTIONS
         layoutList = findViewById(R.id.ll_v_pantry);
         btn_addIngredient = findViewById(R.id.btn_pantry_v_addIngredient);
         tv_j_addCustomIngredient = findViewById(R.id.tv_pantry_v_addNewIngredient);
+        btn_j_search = findViewById(R.id.btn_v_pantry_searchForRecipes);
 
         dbHelper = new DatabaseHelper(this);
         btn_addIngredient.setOnClickListener(this);
@@ -93,9 +68,11 @@ public class Pantry extends AppCompatActivity implements View.OnClickListener
         measurementList.add(0, "Units:");
         measurementAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, measurementList);
 
-
-        loadPantryData(SessionData.getLoggedInUser().getUserId());
+        User user = SessionData.getLoggedInUser();
+        int userId = user.getUserId();
+        loadPantryData(userId);
         addNewIngredientClickListener();
+        searchButtonClickListener();
     }
 
     private void addView(UserIngredient userIngredient)
@@ -395,6 +372,41 @@ public class Pantry extends AppCompatActivity implements View.OnClickListener
 
         dialog.show();
 
+    }
+
+    private void searchButtonClickListener()
+    {
+        btn_j_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Pantry.this, SearchResults.class));
+            }
+        });
+    }
+
+
+
+    private void bottomNavBarSetUp()
+    {
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setSelectedItemId(R.id.bottom_pantry);
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+            if (itemId == R.id.bottom_pantry) {
+                return true;
+            } else if (itemId == R.id.bottom_addRecipe) {
+                startActivity(new Intent(getApplicationContext(), AddRecipe.class));
+                return true;
+            } else if (itemId == R.id.bottom_recipeBook) {
+                startActivity(new Intent(getApplicationContext(), ViewRecipes.class));
+
+                return true;
+            } else if (itemId == R.id.bottom_profile) {
+                startActivity(new Intent(getApplicationContext(), UserInfo.class));
+                return true;
+            }
+            return false;
+        });
     }
 }
 

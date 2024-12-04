@@ -27,7 +27,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
 
     public DatabaseHelper(Context c)
     {
-        super(c, database_name, null, 18);
+        super(c, database_name, null, 31);
     }
 
     @Override
@@ -70,6 +70,9 @@ public class DatabaseHelper extends SQLiteOpenHelper
                 + "foreign key (recipeId) references " + recipes_table_name + " (recipeId), "
                 + "foreign key (ingredientId) references " + ingredients_table_name + " (ingredientId), "
                 + "foreign key (measurementId) references " + measurement_table_name + " (measurementId));");
+
+        Log.d("DatabaseHelper", "Created table: " + recipeIngredients_table_name);
+
 
         db.execSQL("CREATE TABLE " + userFavorites_table_name + " ("
                 + "userFavoriteId integer primary key autoincrement not null, "
@@ -180,7 +183,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
         {
             SQLiteDatabase db = this.getWritableDatabase();
 
-            //1-10
+
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Apple', '1');");
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Banana', '1');");
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Orange', '1');");
@@ -192,7 +195,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Pineapple', '1');");
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Tomato', '1');");
 
-            //11-19
+
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Carrots', '2');");
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Broccoli', '2');");
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Spinach', '2');");
@@ -202,28 +205,28 @@ public class DatabaseHelper extends SQLiteOpenHelper
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Lettuce', '2');");
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Cabbage', '2');");
 
-            //20-24
+
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Rice', '3');");
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Quinoa', '3');");
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Oats', '3');");
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Wheat flour', '3');");
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Cornmeal', '3');");
 
-            //25-29
+
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Chicken', '4');");
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Beef', '4');");
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Pork', '4');");
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Eggs', '4');");
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Salmon', '4');");
 
-            //30-34
+
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Milk', '5');");
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Cheese', '5');");
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Yogurt', '5');");
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Butter', '5');");
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Sour Cream', '5');");
 
-            //35-42
+
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Basil', '6');");
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Thyme', '6');");
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Oregano', '6');");
@@ -233,13 +236,13 @@ public class DatabaseHelper extends SQLiteOpenHelper
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Black Pepper', '6');");
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Paprika', '6');");
 
-            //43-46
+
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Sugar', '7');");
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Honey', '7');");
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Maple Syrup', '7');");
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Molasses', '7');");
 
-            //47-52
+
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Olive Oil', '8');");
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Coconut Oil', '8');");
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Canola Oil', '8');");
@@ -247,32 +250,31 @@ public class DatabaseHelper extends SQLiteOpenHelper
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Ghee', '8');");
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Lard', '8');");
 
-            //53-56
+
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Water', '9');");
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Coffee', '9');");
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Tea', '9');");
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Vinegar', '9');");
 
 
-            //57-59
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Canned Tomatoes', '10');");
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Canned Tuna', '10');");
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Pickles', '10');");
 
-            //60-64
+
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Ketchup', '11');");
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Mustard', '11');");
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Soy Sauce', '11');");
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Hot Sauce', '11');");
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Barbecue Sauce', '11');");
 
-            //65-68
+
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Almonds', '12');");
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Walnuts', '12');");
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Peanuts', '12');");
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Chia Seeds', '12');");
 
-            //69-75
+
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Baking Powder', '13');");
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('All-purpose flour', '13');");
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Baking Soda', '13');");
@@ -281,13 +283,13 @@ public class DatabaseHelper extends SQLiteOpenHelper
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Cocoa Powder', '13');");
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Chocolate Chips', '13');");
 
-            //76-79
+
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Chips', '14');");
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Popcorn', '14');");
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Pretzels', '14');");
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Crackers', '14');");
 
-            //80
+
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Food Coloring', '15');");
             db.execSQL("INSERT INTO " + ingredients_table_name + "(ingredientName, ingredientCategoryId) VALUES ('Salt', '6');");
 
@@ -372,7 +374,11 @@ public class DatabaseHelper extends SQLiteOpenHelper
         {
             SQLiteDatabase db = this.getWritableDatabase();
 
-            db.execSQL("INSERT INTO " + recipes_table_name + "(userId, recipeTitle, recipeInstructions, recipePrepTime, recipePrepTimeCategory, recipeCategoryId) VALUES (1, 'Chocolate Cake', '1. Preheat Oven to 350F. Grease and flour two 9-inch round cake pans. 2. Mix Dry Ingredients: In a large bowl, whisk together the flour, sugar, cocoa powder, baking powder, baking soda, and salt. 3. Add Wet Ingredients: Add the eggs, milk, vegetable oil, and vanilla extract to the dry ingredients. Mix until smooth and well combined. 5. Bake: Pour batter evenly into the pans and bake for 30 to 35 mins, or until a toothpick inserted into the center of the cakes comes out clean. 6 Cool: Let cakes cool in pans for 10 minutes and then take them out of the pans', 1, 'hour', 9)");
+            db.execSQL("INSERT INTO " + recipes_table_name + "(userId, recipeTitle, recipeInstructions, recipePrepTime, recipePrepTimeCategory, recipeCategoryId) VALUES (1, 'Spaghetti Bolognese', 'Cook pasta. Prepare sauce with beef, tomatoes, and spices. Combine and serve.', 45, 'minute(s)', 2);");
+            db.execSQL("INSERT INTO " + recipes_table_name + "(userId, recipeTitle, recipeInstructions, recipePrepTime, recipePrepTimeCategory, recipeCategoryId) VALUES (2, 'Chicken Tikka Masala', 'Marinate chicken. Cook with masala sauce. Serve with naan or rice.', 1, 'hour(s)', 4);");
+            db.execSQL("INSERT INTO " + recipes_table_name + "(userId, recipeTitle, recipeInstructions, recipePrepTime, recipePrepTimeCategory, recipeCategoryId) VALUES (3, 'Vegetable Stir Fry', 'Chop vegetables. Stir-fry with sauce. Serve with rice or noodles.', 20, 'minute(s)', 3);");
+            db.execSQL("INSERT INTO " + recipes_table_name + "(userId, recipeTitle, recipeInstructions, recipePrepTime, recipePrepTimeCategory, recipeCategoryId) VALUES (4, 'Mediterranean Salad', 'Mix greens, olives, feta, and vinaigrette. Serve fresh.', 15, 'minute(s)', 7);");
+            db.execSQL("INSERT INTO " + recipes_table_name + "(userId, recipeTitle, recipeInstructions, recipePrepTime, recipePrepTimeCategory, recipeCategoryId) VALUES (5, 'Chocolate Cake', 'Mix ingredients. Bake in oven at 350°F for 30 minutes. Let cool and serve.', 50, 'minute(s)', 9);");
 
             db.close();
         }
@@ -384,17 +390,66 @@ public class DatabaseHelper extends SQLiteOpenHelper
         {
             SQLiteDatabase db = this.getWritableDatabase();
 
-            //chocolate cake
-            db.execSQL("INSERT INTO " + recipeIngredients_table_name + "(recipeId, ingredientId, recipeIngredientQuantity, measurementId) VALUES (1, 70, 1.75, 4)");
-            db.execSQL("INSERT INTO " + recipeIngredients_table_name + "(recipeId, ingredientId, recipeIngredientQuantity, measurementId) VALUES (1, 43, 1.5, 4)");
-            db.execSQL("INSERT INTO " + recipeIngredients_table_name + "(recipeId, ingredientId, recipeIngredientQuantity, measurementId) VALUES (1, 74, 1.75, 4)");
-            db.execSQL("INSERT INTO " + recipeIngredients_table_name + "(recipeId, ingredientId, recipeIngredientQuantity, measurementId) VALUES (1, 69, 1.5, 1)");
-            db.execSQL("INSERT INTO " + recipeIngredients_table_name + "(recipeId, ingredientId, recipeIngredientQuantity, measurementId) VALUES (1, 71, 1.5, 1)");
-            db.execSQL("INSERT INTO " + recipeIngredients_table_name + "(recipeId, ingredientId, recipeIngredientQuantity, measurementId) VALUES (1, 81, 1, 1)");
-            db.execSQL("INSERT INTO " + recipeIngredients_table_name + "(recipeId, ingredientId, recipeIngredientQuantity, measurementId) VALUES (1, 28, 2, 10)");
-            db.execSQL("INSERT INTO " + recipeIngredients_table_name + "(recipeId, ingredientId, recipeIngredientQuantity, measurementId) VALUES (1, 30, 1, 4)");
-            db.execSQL("INSERT INTO " + recipeIngredients_table_name + "(recipeId, ingredientId, recipeIngredientQuantity, measurementId) VALUES (1, 50, 0.5, 4)");
-            db.execSQL("INSERT INTO " + recipeIngredients_table_name + "(recipeId, ingredientId, recipeIngredientQuantity, measurementId) VALUES (1, 73, 2, 1)");
+
+            db.execSQL("INSERT INTO " + recipeIngredients_table_name + "(recipeId, ingredientId, recipeIngredientQuantity, measurementId) VALUES (1, 1, 7.05, 8);");  //Spaghetti: 7.05 oz
+            db.execSQL("INSERT INTO " + recipeIngredients_table_name + "(recipeId, ingredientId, recipeIngredientQuantity, measurementId) VALUES (1, 17, 3.53, 8);"); //Tomato: 3.53 oz
+            db.execSQL("INSERT INTO " + recipeIngredients_table_name + "(recipeId, ingredientId, recipeIngredientQuantity, measurementId) VALUES (1, 24, 8.82, 8);"); //Ground Beef: 8.82 oz
+            db.execSQL("INSERT INTO " + recipeIngredients_table_name + "(recipeId, ingredientId, recipeIngredientQuantity, measurementId) VALUES (1, 14, 2.65, 8);"); //Onion: 2.65 oz
+            db.execSQL("INSERT INTO " + recipeIngredients_table_name + "(recipeId, ingredientId, recipeIngredientQuantity, measurementId) VALUES (1, 37, 2, 10);");   // Garlic: 2 cloves
+            db.execSQL("INSERT INTO " + recipeIngredients_table_name + "(recipeId, ingredientId, recipeIngredientQuantity, measurementId) VALUES (1, 43, 1, 2);");    // Olive Oil: 1 tbsp
+            db.execSQL("INSERT INTO " + recipeIngredients_table_name + "(recipeId, ingredientId, recipeIngredientQuantity, measurementId) VALUES (1, 30, 1, 1);");    // Basil: 1 tsp
+            db.execSQL("INSERT INTO " + recipeIngredients_table_name + "(recipeId, ingredientId, recipeIngredientQuantity, measurementId) VALUES (1, 48, 1, 1);");    // Salt: 1 tsp
+            db.execSQL("INSERT INTO " + recipeIngredients_table_name + "(recipeId, ingredientId, recipeIngredientQuantity, measurementId) VALUES (1, 35, 0.5, 1);");  // Black Pepper: 0.5 tsp
+            db.execSQL("INSERT INTO " + recipeIngredients_table_name + "(recipeId, ingredientId, recipeIngredientQuantity, measurementId) VALUES (1, 29, 1, 8);");    // Parmesan Cheese: 1 oz
+
+
+            db.execSQL("INSERT INTO " + recipeIngredients_table_name + "(recipeId, ingredientId, recipeIngredientQuantity, measurementId) VALUES (2, 24, 17.64, 8);"); // Chicken: 17.64 oz
+            db.execSQL("INSERT INTO " + recipeIngredients_table_name + "(recipeId, ingredientId, recipeIngredientQuantity, measurementId) VALUES (2, 31, 6.76, 3);");  // Yogurt: 6.76 fl oz
+            db.execSQL("INSERT INTO " + recipeIngredients_table_name + "(recipeId, ingredientId, recipeIngredientQuantity, measurementId) VALUES (2, 17, 8, 8);");     // Tomato Sauce: 8 oz
+            db.execSQL("INSERT INTO " + recipeIngredients_table_name + "(recipeId, ingredientId, recipeIngredientQuantity, measurementId) VALUES (2, 38, 1, 2);");     // Cumin: 1 tbsp
+            db.execSQL("INSERT INTO " + recipeIngredients_table_name + "(recipeId, ingredientId, recipeIngredientQuantity, measurementId) VALUES (2, 33, 0.25, 1);");  // Cinnamon: 0.25 tsp
+            db.execSQL("INSERT INTO " + recipeIngredients_table_name + "(recipeId, ingredientId, recipeIngredientQuantity, measurementId) VALUES (2, 37, 3, 10);");    // Garlic: 3 cloves
+            db.execSQL("INSERT INTO " + recipeIngredients_table_name + "(recipeId, ingredientId, recipeIngredientQuantity, measurementId) VALUES (2, 32, 1, 2);");     // Ginger: 1 tbsp
+            db.execSQL("INSERT INTO " + recipeIngredients_table_name + "(recipeId, ingredientId, recipeIngredientQuantity, measurementId) VALUES (2, 34, 0.5, 1);");   // Turmeric: 0.5 tsp
+            db.execSQL("INSERT INTO " + recipeIngredients_table_name + "(recipeId, ingredientId, recipeIngredientQuantity, measurementId) VALUES (2, 36, 1, 1);");     // Paprika: 1 tsp
+            db.execSQL("INSERT INTO " + recipeIngredients_table_name + "(recipeId, ingredientId, recipeIngredientQuantity, measurementId) VALUES (2, 48, 1, 1);");     // Salt: 1 tsp
+            db.execSQL("INSERT INTO " + recipeIngredients_table_name + "(recipeId, ingredientId, recipeIngredientQuantity, measurementId) VALUES (2, 27, 2, 2);");     // Butter: 2 tbsp
+
+
+            db.execSQL("INSERT INTO " + recipeIngredients_table_name + "(recipeId, ingredientId, recipeIngredientQuantity, measurementId) VALUES (3, 13, 5.29, 8);");  // Broccoli: 5.29 oz
+            db.execSQL("INSERT INTO " + recipeIngredients_table_name + "(recipeId, ingredientId, recipeIngredientQuantity, measurementId) VALUES (3, 14, 5.29, 8);");  // Spinach: 5.29 oz
+            db.execSQL("INSERT INTO " + recipeIngredients_table_name + "(recipeId, ingredientId, recipeIngredientQuantity, measurementId) VALUES (3, 11, 3.53, 8);");  // Carrots: 3.53 oz
+            db.execSQL("INSERT INTO " + recipeIngredients_table_name + "(recipeId, ingredientId, recipeIngredientQuantity, measurementId) VALUES (3, 16, 2.65, 8);");  // Bell Pepper: 2.65 oz
+            db.execSQL("INSERT INTO " + recipeIngredients_table_name + "(recipeId, ingredientId, recipeIngredientQuantity, measurementId) VALUES (3, 36, 2, 2);");     // Soy Sauce: 2 tbsp
+            db.execSQL("INSERT INTO " + recipeIngredients_table_name + "(recipeId, ingredientId, recipeIngredientQuantity, measurementId) VALUES (3, 32, 1, 2);");     // Ginger: 1 tbsp
+            db.execSQL("INSERT INTO " + recipeIngredients_table_name + "(recipeId, ingredientId, recipeIngredientQuantity, measurementId) VALUES (3, 37, 2, 10);");    // Garlic: 2 cloves
+            db.execSQL("INSERT INTO " + recipeIngredients_table_name + "(recipeId, ingredientId, recipeIngredientQuantity, measurementId) VALUES (3, 43, 1, 2);");     // Olive Oil: 1 tbsp
+            db.execSQL("INSERT INTO " + recipeIngredients_table_name + "(recipeId, ingredientId, recipeIngredientQuantity, measurementId) VALUES (3, 57, 1, 1);");     // Cornstarch: 1 tsp
+            db.execSQL("INSERT INTO " + recipeIngredients_table_name + "(recipeId, ingredientId, recipeIngredientQuantity, measurementId) VALUES (3, 45, 1, 2);");     // Honey: 1 tbsp
+
+
+            db.execSQL("INSERT INTO " + recipeIngredients_table_name + "(recipeId, ingredientId, recipeIngredientQuantity, measurementId) VALUES (4, 16, 3.53, 8);");  // Lettuce: 3.53 oz
+            db.execSQL("INSERT INTO " + recipeIngredients_table_name + "(recipeId, ingredientId, recipeIngredientQuantity, measurementId) VALUES (4, 29, 1.76, 8);");  // Feta Cheese: 1.76 oz
+            db.execSQL("INSERT INTO " + recipeIngredients_table_name + "(recipeId, ingredientId, recipeIngredientQuantity, measurementId) VALUES (4, 17, 3.53, 8);");  // Tomatoes: 3.53 oz
+            db.execSQL("INSERT INTO " + recipeIngredients_table_name + "(recipeId, ingredientId, recipeIngredientQuantity, measurementId) VALUES (4, 18, 3.53, 8);");  // Cucumber: 3.53 oz
+            db.execSQL("INSERT INTO " + recipeIngredients_table_name + "(recipeId, ingredientId, recipeIngredientQuantity, measurementId) VALUES (4, 19, 2, 8);");     // Olives: 2 oz
+            db.execSQL("INSERT INTO " + recipeIngredients_table_name + "(recipeId, ingredientId, recipeIngredientQuantity, measurementId) VALUES (4, 43, 1, 2);");     // Olive Oil: 1 tbsp
+            db.execSQL("INSERT INTO " + recipeIngredients_table_name + "(recipeId, ingredientId, recipeIngredientQuantity, measurementId) VALUES (4, 44, 1, 2);");     // Lemon Juice: 1 tbsp
+            db.execSQL("INSERT INTO " + recipeIngredients_table_name + "(recipeId, ingredientId, recipeIngredientQuantity, measurementId) VALUES (4, 48, 0.5, 1);");   // Salt: 0.5 tsp
+            db.execSQL("INSERT INTO " + recipeIngredients_table_name + "(recipeId, ingredientId, recipeIngredientQuantity, measurementId) VALUES (4, 35, 0.25, 1);");  // Black Pepper: 0.25 tsp
+
+
+            db.execSQL("INSERT INTO " + recipeIngredients_table_name + "(recipeId, ingredientId, recipeIngredientQuantity, measurementId) VALUES (5, 56, 4, 8);");     // All-purpose Flour: 4 oz
+            db.execSQL("INSERT INTO " + recipeIngredients_table_name + "(recipeId, ingredientId, recipeIngredientQuantity, measurementId) VALUES (5, 59, 2, 8);");     // Cocoa Powder: 2 oz
+            db.execSQL("INSERT INTO " + recipeIngredients_table_name + "(recipeId, ingredientId, recipeIngredientQuantity, measurementId) VALUES (5, 47, 3.53, 8);");  // Sugar: 3.53 oz
+            db.execSQL("INSERT INTO " + recipeIngredients_table_name + "(recipeId, ingredientId, recipeIngredientQuantity, measurementId) VALUES (5, 27, 2, 8);");     // Butter: 2 oz
+            db.execSQL("INSERT INTO " + recipeIngredients_table_name + "(recipeId, ingredientId, recipeIngredientQuantity, measurementId) VALUES (5, 37, 2, 10);");    // Eggs: 2 large
+            db.execSQL("INSERT INTO " + recipeIngredients_table_name + "(recipeId, ingredientId, recipeIngredientQuantity, measurementId) VALUES (5, 58, 1, 1);");     // Baking Powder: 1 tsp
+            db.execSQL("INSERT INTO " + recipeIngredients_table_name + "(recipeId, ingredientId, recipeIngredientQuantity, measurementId) VALUES (5, 55, 1, 1);");     // Vanilla Extract: 1 tsp
+            db.execSQL("INSERT INTO " + recipeIngredients_table_name + "(recipeId, ingredientId, recipeIngredientQuantity, measurementId) VALUES (5, 31, 4, 3);");     // Milk: 4 fl oz
+            db.execSQL("INSERT INTO " + recipeIngredients_table_name + "(recipeId, ingredientId, recipeIngredientQuantity, measurementId) VALUES (5, 60, 2, 8);");     // Chocolate Chips: 2 oz
+            db.execSQL("INSERT INTO " + recipeIngredients_table_name + "(recipeId, ingredientId, recipeIngredientQuantity, measurementId) VALUES (5, 48, 0.5, 1);");   // Salt: 0.5 tsp
+
 
             db.close();
         }
@@ -483,7 +538,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
         }
     }
 
-    public void getAllUserDataGivenUsername(String username)
+    public User getAllUserDataGivenUsername(String username)
     {
         String selectQuery = "SELECT * FROM " + user_table_name + " WHERE username = '" + username + "';";
 
@@ -506,14 +561,42 @@ public class DatabaseHelper extends SQLiteOpenHelper
             SessionData.setLoggedInUser(loggedInUser);
 
             cursor.close();
+            db.close();
+            return loggedInUser;
         }
 
         else
         {
             SessionData.setLoggedInUser(null);
             Log.d("Error", "Error");
+            db.close();
         }
+        return null;
     }
+
+    public User getUserById(int userId)
+    {
+        String selectQuery = "SELECT fname, lname FROM " + user_table_name + " WHERE userId = " + userId + ";";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+
+        cursor.moveToFirst();
+        User user = new User();
+
+        user.setFname(cursor.getString(0));
+        user.setLname(cursor.getString(1));
+
+        cursor.close();
+
+
+        db.close();
+        return user;
+    }
+
+
+
 
     public void updateUserInfo(User user)
     {
@@ -533,9 +616,12 @@ public class DatabaseHelper extends SQLiteOpenHelper
     {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        String selectStatement = "DELETE FROM " + user_table_name + " WHERE userId = '" + userId + "';";
+        String deleteUser = "DELETE FROM " + user_table_name + " WHERE userId = '" + userId + "';";
+        String deleteRecipes = "DELETE FROM " + recipes_table_name + " WHERE userId = '" + userId + "';";
 
-        db.execSQL(selectStatement);
+        db.execSQL(deleteUser);
+        db.execSQL(deleteRecipes);
+
 
         db.close();
     }
@@ -554,6 +640,8 @@ public class DatabaseHelper extends SQLiteOpenHelper
         db.insert("Users", null, values);
         db.close();
     }
+
+
 
     //FOR SPINNERS
     public ArrayList<String> getAllIngredientNamesForSpinner()
@@ -613,6 +701,46 @@ public class DatabaseHelper extends SQLiteOpenHelper
 
         return measurementList;
     }
+
+    public ArrayList<String> getAllRecipeCategoriesForSpinner()
+    {
+        ArrayList<String> recipeCategoriesList = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("SELECT recipeCategory FROM " + cuisines_table_name, null);
+        while(cursor.moveToNext())
+        {
+            String categoryType = cursor.getString(0);
+            recipeCategoriesList.add(categoryType);
+        }
+        cursor.close();
+        db.close();
+
+        return recipeCategoriesList;
+    }
+
+    public String getPrepTimeCategoryForRecipe(int recipeId)
+    {
+        String prepTimeCategory = "";
+        SQLiteDatabase db = this.getReadableDatabase();
+
+
+        String selectStatement = "SELECT recipePrepTimeCategory FROM " + recipes_table_name + " WHERE recipeId = '" + recipeId + "';";
+
+        Cursor cursor = db.rawQuery(selectStatement, null);
+
+        if(cursor != null)
+        {
+            cursor.moveToFirst();
+            prepTimeCategory = cursor.getString(0);
+        }
+        cursor.close();
+        db.close();
+
+        return prepTimeCategory;
+    }
+
 
     public String getIngredientNameById(int ingredientId)
     {
@@ -722,6 +850,51 @@ public class DatabaseHelper extends SQLiteOpenHelper
         db.close();
         return ingredientCategoryId;
     }
+    public int getRecipeCategoryIdByName(String recipeCategoryName)
+    {
+        int recipeCategoryId = -1;
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selectStatment = "SELECT recipeCategoryId FROM " + cuisines_table_name + " WHERE recipeCategory = '" + recipeCategoryName + "';";
+
+        Cursor cursor = db.rawQuery(selectStatment, null);
+
+        if(cursor != null)
+        {
+            cursor.moveToFirst();
+            recipeCategoryId = cursor.getInt(0);
+        }
+        cursor.close();
+        db.close();
+        return recipeCategoryId;
+
+    }
+
+
+    public String getRecipeCategoryNameById(int categoryId)
+    {
+        String reciepeCategoryName = "";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+
+        String selectStatement = "SELECT recipeCategory FROM " + cuisines_table_name + " WHERE recipeCategoryId = " + categoryId + ";";
+
+        Cursor cursor = db.rawQuery(selectStatement, null);
+
+        if(cursor != null)
+        {
+            cursor.moveToFirst();
+            reciepeCategoryName = cursor.getString(0);
+        }
+
+        cursor.close();
+
+        db.close();
+
+        return reciepeCategoryName;
+    }
+
 
 
     //CRUD FOR USER INGREDIENTS
@@ -808,32 +981,181 @@ public class DatabaseHelper extends SQLiteOpenHelper
         db.close();
     }
 
-    //recipes
+    //RECIPES
+    public ArrayList<Recipe> getAllRecipes()
+    {
+        ArrayList<Recipe> recipes = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
 
-//    public ArrayList<Recipe> getAllRecipes()
-//    {
-//        SQLiteDatabase db = this.getReadableDatabase();
-//
-//        String selectStatment = "SELECT * FROM " + recipes_table_name;
-//
-//        Cursor cursor = db.rawQuery(selectStatment, null);
-//
-//        if(cursor != null)
-//        {
-//            do{
-//                cursor.moveToFirst();
-//
-//                int userIngredientId = cursor.getInt(0);
-//                //int userId = cursor.getInt(1);
-//                int ingredientId = cursor.getInt(2);
-//                float quantity = cursor.getFloat(3);
-//                int measurementId = cursor.getInt(4);
-//
-//                int recipeId = cursor.getInt(0);
-//                String recipeTitle = cursor.getString()
-//            }
-//        }
-//    }
+        Cursor cursor = db.rawQuery("SELECT * FROM " + recipes_table_name, null);
+
+        if(cursor != null)
+        {
+            cursor.moveToNext();
+            do{
+                int recipeId = cursor.getInt(0);
+                int userId = cursor.getInt(1);
+                String recipeTitle = cursor.getString(2);
+                String recipeInstructions = cursor.getString(3);
+                float prepTime = cursor.getFloat(4);
+                String prepTimeCategory = cursor.getString(5);
+                int recipeCatId = cursor.getInt(6);
+
+                Recipe recipe = new Recipe(recipeId, userId, recipeTitle, recipeInstructions, prepTime, prepTimeCategory, recipeCatId);
+                recipes.add(recipe);
+            }
+            while(cursor.moveToNext());
+            cursor.close();
+        }
+
+        db.close();
+        return recipes;
+    }
+
+
+    public ArrayList<RecipeIngredient> getIngredientsByRecipeId(int recipeId)
+    {
+        ArrayList<RecipeIngredient> ingredients = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selectStatement = "SELECT * FROM " + recipeIngredients_table_name + " WHERE recipeId = " + recipeId + ";";
+
+        Cursor cursor = db.rawQuery(selectStatement, null);
+
+        if(cursor.moveToFirst())
+        {
+            do {
+                RecipeIngredient ingredient = new RecipeIngredient();
+                ingredient.setRecipeId(cursor.getInt(0));
+                ingredient.setIngredientId(cursor.getInt(1));
+                ingredient.setIngredientQuantity(cursor.getFloat(2));
+                ingredient.setMeasurementId(cursor.getInt(3));
+
+                ingredients.add(ingredient);
+            } while (cursor.moveToNext());
+
+        }
+        cursor.close();
+        db.close();
+
+        return ingredients;
+    }
+
+    public int addRecipe(int userId, String title, String instructions, float prepTime, String prepTimeCategory, int recipeCategoryId)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values.put("userId", userId);
+        values.put("recipeTitle", title);
+        values.put("recipeInstructions", instructions);
+        values.put("recipePrepTime", prepTime);
+        values.put("recipePrepTimeCategory", prepTimeCategory);
+        values.put("recipeCategoryId", recipeCategoryId);
+
+        long recipeId = db.insert(recipes_table_name, null, values);
+
+        db.close();
+
+        return (int) recipeId;
+    }
+
+    public void addRecipeIngredient(int recipeId, int ingredientId, float quantity, int measurementId)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values.put("recipeId", recipeId);
+        values.put("ingredientId", ingredientId);
+        values.put("recipeIngredientQuantity", quantity);
+        values.put("measurementId", measurementId);
+
+        db.insert(recipeIngredients_table_name, null, values);
+    }
+
+    public void addRecipeToFavorites(int userId, int recipeId)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String checkQuery = "SELECT COUNT(*) FROM " + userFavorites_table_name + " WHERE userId = " + userId + " AND recipeId = " + recipeId + ";";
+
+        Cursor cursor = db.rawQuery(checkQuery, null);
+
+        cursor.moveToNext();
+
+        int count = cursor.getInt(0);
+        cursor.close();
+
+        if(count == 0)
+        {
+            ContentValues values = new ContentValues();
+            values.put("userId", userId);
+            values.put("recipeId", recipeId);
+
+            db.insert(userFavorites_table_name, null, values);
+            Log.d("DATABASEHELPER", "RECIPE ADDED TO FAVORITES");
+
+        }
+        else
+        {
+            Log.d("DATABASEHELPER", "RECIPE ALREADY IN FAVORITES");
+        }
+
+        db.close();
+    }
+
+    public ArrayList<RecipeMatch> getMatchingRecipes(int userId)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        ArrayList<RecipeMatch> recipeMatches = new ArrayList<>();
+
+        String query = "SELECT r.recipeId, r.recipeTitle, r.recipeInstructions, r.recipePrepTime, r.recipePrepTimeCategory, " +
+                        "r.recipeCategoryId, r.userId, COUNT(DISTINCT ri.ingredientId) AS totalIngredients, " +
+                        "SUM(CASE WHEN ui.ingredientId IS NOT NULL THEN 1 ELSE 0 END) AS matchedIngredients " +
+                        "FROM recipes r " +
+                        "JOIN recipeIngredients ri ON r.recipeId = ri.recipeId " +
+                        "LEFT JOIN userIngredients ui ON ri.ingredientId = ui.ingredientId AND ui.userId = " + userId + " " +
+                        "GROUP BY r.recipeId " +
+                        "HAVING (totalIngredients - matchedIngredients) <= 2 " +
+                        "ORDER BY matchedIngredients DESC, totalIngredients ASC;";
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        if(cursor != null)
+        {
+            while(cursor.moveToNext())
+            {
+                int recipeId = cursor.getInt(0);
+                String recipeTitle = cursor.getString(1);
+                String recipeInstructions = cursor.getString(2);
+                float prepTime = cursor.getFloat(3);
+                String prepTimeCategory = cursor.getString(4);
+                int recipeCategoryId = cursor.getInt(5);
+                int creatorId = cursor.getInt(6);
+                int totalIngredients = cursor.getInt(7);
+                int matchedIngredients = cursor.getInt(8);
+
+                Recipe recipe = new Recipe(recipeId, creatorId, recipeTitle, recipeInstructions, prepTime, prepTimeCategory, recipeCategoryId);
+                RecipeMatch recipeMatch = new RecipeMatch(recipe, matchedIngredients, totalIngredients);
+                recipeMatches.add(recipeMatch);
+            }
+            cursor.close();
+        }
+
+        db.close();
+
+        return recipeMatches;
+    }
+
+
+
+
+
+
+
 
 
 }
