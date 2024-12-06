@@ -25,7 +25,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 
-public class RecipeDetails extends AppCompatActivity {
+public class RecipeDetails extends AppCompatActivity
+{
 
     DatabaseHelper dbhelper;
 
@@ -35,6 +36,7 @@ public class RecipeDetails extends AppCompatActivity {
     EditText et_j_prepTime;
     Spinner sp_j_prepTimeCategory;
     Button btn_j_editRecipe;
+    Button btn_j_addIngredient;
 
     LinearLayout ll_j_ingredientList;
     ArrayAdapter<String> measurementAdapter;
@@ -62,6 +64,7 @@ public class RecipeDetails extends AppCompatActivity {
         et_j_prepTime = findViewById(R.id.et_v_recipeDetails_prepTime);
         sp_j_prepTimeCategory = findViewById(R.id.sp_v_recipeDetails_prepTimeCategory);
         btn_j_editRecipe = findViewById(R.id.btn_v_recipeDetails_edit);
+        btn_j_addIngredient = findViewById(R.id.btn_v_addRecipe_addAnotherIngredient);
         ll_j_ingredientList = findViewById(R.id.ll_v_recipeDetails);
         tv_j_addToFavorites = findViewById(R.id.tv_v_recipeDetails_addToFavorites);
 
@@ -150,10 +153,11 @@ public class RecipeDetails extends AppCompatActivity {
             sp_j_prepTimeCategory.setOnTouchListener((v, event) -> true);
 
 
-
             btn_j_editRecipe.setVisibility(View.GONE);
+            btn_j_addIngredient.setVisibility(View.GONE);
         }
     }
+
     private void populateRecipeDetails(Recipe recipe)
     {
         et_j_recipeTitle.setText(recipe.getRecipeTitle());

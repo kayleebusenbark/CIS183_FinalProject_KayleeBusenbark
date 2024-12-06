@@ -5,10 +5,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toolbar;
@@ -16,9 +18,7 @@ import android.widget.Toolbar;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -34,6 +34,8 @@ public class ViewRecipes extends AppCompatActivity {
 
     Spinner sp_j_viewAllRecipes_recipeCatSpinner;
 
+    ImageButton im_j_searchButton;
+
 
 
     @Override
@@ -42,8 +44,12 @@ public class ViewRecipes extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_view_recipes);
 
+        androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.recipeSelector);
+        setSupportActionBar(toolbar);
+
         sp_j_viewAllRecipes_recipeCatSpinner = findViewById(R.id.sp_v_allRecipes_Categories);
         listView = findViewById(R.id.lv_viewRecipes);
+        im_j_searchButton = findViewById(R.id.imbtn_viewRecipes_search);
         dbHelper = new DatabaseHelper(this);
 
         ArrayList<Recipe> recipes = dbHelper.getAllRecipes();
@@ -59,7 +65,41 @@ public class ViewRecipes extends AppCompatActivity {
         sp_j_viewAllRecipes_recipeCatSpinner.setAdapter(recipeCategoryAdapter);
 
         listViewOnClickListener();
+        filterRecipesOnClickListener();
 
+    }
+
+    private void filterRecipesOnClickListener()
+    {
+        im_j_searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                filterRecipesByCategory();
+            }
+        });
+    }
+
+
+    private void filterRecipesByCategory()
+    {
+        int selectedPosition = sp_j_viewAllRecipes_recipeCatSpinner.getSelectedItemPosition();
+
+        if(selectedPosition > 0)
+        {
+            String selectedCategory = sp_j_viewAllRecipes_recipeCatSpinner.getSelectedItem().toString();
+            int categoryId = dbHelper.getRecipeCategoryIdByName(selectedCategory);
+
+            ArrayList<Recipe> filteredRecipes = dbHelper.getRecipesByCategoryId(categoryId);
+
+            recipeListAdaptor = new RecipeListAdaptor(this, filteredRecipes);
+            listView.setAdapter(recipeListAdaptor);
+        }
+        else
+        {
+            ArrayList<Recipe> recipes = dbHelper.getAllRecipes();
+            recipeListAdaptor = new RecipeListAdaptor(this, recipes);
+            listView.setAdapter(recipeListAdaptor);
+        }
     }
 
     private void listViewOnClickListener()
@@ -102,27 +142,22 @@ public class ViewRecipes extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        getMenuInflater().inflate(R.menu.recipe_menu_selector, menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.recipe_selector_menu, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        if (item.getItemId() == R.id.myRecipes)
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        if(item.getItemId() == R.id.myfavorites)
         {
-            startActivity(new Intent(ViewRecipes.this, MyRecipes.class));
+            startActivity(new Intent(this, MyFavorites.class));
         }
-        else if (item.getItemId() == R.id.myFavorites)
+        else if (item.getItemId() == R.id.myrecipes)
         {
-            startActivity(new Intent(ViewRecipes.this, MyFavorites.class));
+            startActivity(new Intent(this, MyRecipes.class));
         }
-        else
-        {
-            return super.onOptionsItemSelected(item);
-        }
-        return true;
+        return super.onOptionsItemSelected(item);
     }
-
-
 }

@@ -13,11 +13,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="53dp"
+        app:popupTheme="@style/Theme.AppCompat.Light.DarkActionBar"
         app:layout_constraintBottom_toTopOf="@+id/sp_v_allRecipes_Categories"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView"
         app:layout_constraintTop_toTopOf="parent"
-        app:menu="@menu/recipe_menu_selector" />
+        app:menu="@menu/recipe_selector_menu" />
 
 
     <TextView
@@ -77,7 +78,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <ImageButton
-        android:id="@+id/imageButton3"
+        android:id="@+id/imbtn_viewRecipes_search"
         android:layout_width="wrap_content"
         android:layout_height="36dp"
         android:layout_marginStart="36dp"

@@ -1150,6 +1150,108 @@ public class DatabaseHelper extends SQLiteOpenHelper
         return recipeMatches;
     }
 
+    public ArrayList<Recipe> getRecipesByUserId(int userId)
+    {
+        ArrayList<Recipe> userRecipes = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selectStatment = "SELECT * FROM " + recipes_table_name + " WHERE userId = " + userId + ";";
+
+        Cursor cursor = db.rawQuery(selectStatment, null);
+
+        if(cursor != null)
+        {
+            while(cursor.moveToNext())
+            {
+                int recipeId = cursor.getInt(0);
+                String recipeTitle = cursor.getString(2);
+                String recipeInstructions = cursor.getString(3);
+                float prepTime = cursor.getFloat(4);
+                String prepTimeCategory = cursor.getString(5);
+                int recipeCategoryId = cursor.getInt(6);
+
+                Recipe recipe = new Recipe(recipeId, userId, recipeTitle, recipeInstructions, prepTime, prepTimeCategory, recipeCategoryId);
+                userRecipes.add(recipe);
+            }
+            cursor.close();
+        }
+        db.close();
+
+        return  userRecipes;
+    }
+
+    public ArrayList<Recipe> getFavoriteRecipesByUserId(int userId)
+    {
+        ArrayList<Recipe> favoriteRecipes = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT r.recipeId, r.userId, r.recipeTitle, r.recipeInstructions, r.recipePrepTime, " +
+                        "r.recipePrepTimeCategory, r.recipeCategoryId " +
+                        "FROM " + recipes_table_name + " r " +
+                        "INNER JOIN " + userFavorites_table_name + " uf " +
+                        "ON r.recipeId = uf.recipeId " +
+                        "WHERE uf.userId = " + userId + ";";
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        if(cursor != null)
+        {
+            while(cursor.moveToNext())
+            {
+                int recipeId = cursor.getInt(0);
+                int creatorId = cursor.getInt(1);
+                String recipeTitle = cursor.getString(2);
+                String recipeInstructions = cursor.getString(3);
+                float prepTime = cursor.getFloat(4);
+                String prepTimeCategory = cursor.getString(5);
+                int recipeCategoryId = cursor.getInt(6);
+
+                Recipe recipe = new Recipe(recipeId, creatorId, recipeTitle, recipeInstructions, prepTime, prepTimeCategory, recipeCategoryId);
+                favoriteRecipes.add(recipe);
+            }
+            cursor.close();
+        }
+        db.close();;
+        return favoriteRecipes;
+
+    }
+
+    public ArrayList<Recipe> getRecipesByCategoryId(int categoryId)
+    {
+        ArrayList<Recipe> recipes = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT * FROM " + recipes_table_name + " WHERE recipeCategoryId = " + categoryId + ";";
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        if(cursor != null)
+        {
+            while(cursor.moveToNext())
+            {
+                int recipeId = cursor.getInt(0);
+                int userId = cursor.getInt(1);
+                String recipeTitle = cursor.getString(2);
+                String recipeInstructions = cursor.getString(3);
+                float prepTime = cursor.getFloat(4);
+                String prepTimeCategory = cursor.getString(5);
+                int recipeCatId = cursor.getInt(6);
+
+                Recipe recipe = new Recipe(recipeId, userId, recipeTitle, recipeInstructions, prepTime, prepTimeCategory, recipeCatId);
+                recipes.add(recipe);
+            }
+
+            cursor.close();
+        }
+        db.close();
+
+        return recipes;
+
+    }
+
+
+
 
 
 
