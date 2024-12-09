@@ -96,34 +96,47 @@
                 android:layout_marginTop="16dp"
                 android:orientation="vertical"/>
 
-            <Button
-                android:id="@+id/btn_v_recipeDetails_addAnotherIngredient"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="36dp"
-                android:backgroundTint="#2E6F40"
-                android:text="Add Another Ingredient"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"/>
+
+                <Button
+                    android:id="@+id/btn_v_recipeDetails_addAnotherIngredient"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="36dp"
+                    android:backgroundTint="#2E6F40"
+                    android:text="Add Ingredient"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <Button
+                    android:id="@+id/btn_v_recipeDetails_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="3dp"
+                    android:backgroundTint="#2E6F40"
+                    android:text="Update Recipe"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
 
 
-            <Button
-                android:id="@+id/btn_v_recipeDetails_edit"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="36dp"
-                android:backgroundTint="#2E6F40"
-                android:text="Edit Recipe"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                <Button
+                    android:id="@+id/btn_v_recipeDetails_delete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="3dp"
+                    android:backgroundTint="#2E6F40"
+                    android:text=" Delete Recipe "
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
                 android:id="@+id/tv_v_recipeDetails_addToFavorites"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginTop="3dp"
                 android:text="Add To Favorites"
                 android:textStyle="bold" />
 

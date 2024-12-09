@@ -27,7 +27,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
 
     public DatabaseHelper(Context c)
     {
-        super(c, database_name, null, 31);
+        super(c, database_name, null, 33);
     }
 
     @Override
@@ -626,6 +626,18 @@ public class DatabaseHelper extends SQLiteOpenHelper
         db.close();
     }
 
+    public void deleteRecipe(int userId)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String deleteRecipe = "DELETE FROM " + recipes_table_name + " WHERE userId = '" + userId + "';";
+
+        db.execSQL(deleteRecipe);
+
+        db.close();
+    }
+
+
     public void createNewUser(String username, String fname, String lname, String password)
     {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -1075,6 +1087,50 @@ public class DatabaseHelper extends SQLiteOpenHelper
 
         db.insert(recipeIngredients_table_name, null, values);
     }
+
+    public void updateRecipe(int recipeId, String title, String instructions, float prepTime, String prepTimeCategory, int categoryId)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String updateQuery = "UPDATE Recipes SET " +
+                            "recipeTitle = '" + title + "', " +
+                            "recipeInstructions = '" + instructions + "', " +
+                            "recipePrepTime = " + prepTime + ", " +
+                            "recipePrepTimeCategory = '" + prepTimeCategory + "', " +
+                            "recipeCategoryId = " + categoryId + " " +
+                            "WHERE recipeId = " + recipeId + ";";
+
+        db.execSQL(updateQuery);
+        db.close();
+    }
+
+
+    public void updateRecipeIngredient(int recipeId, int ingredientId, float quantity, int measurementId)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String updateQuery = "UPDATE recipeIngredients SET " +
+                            "recipeIngredientQuantity = " + quantity + ", " +
+                            "measurementId = " + measurementId + " " +
+                            "WHERE recipeId = " + recipeId + " AND ingredientId = " + ingredientId + ";";
+
+        db.execSQL(updateQuery);
+        db.close();
+    }
+
+    public void deleteRecipeIngredient(int recipeId, int ingredientId)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String deleteQuery = "DELETE FROM recipeIngredients " +
+                            "WHERE recipeId = " + recipeId + " AND ingredientId = " + ingredientId + ";";
+
+        db.execSQL(deleteQuery);
+        db.close();
+    }
+
+
+
 
     public void addRecipeToFavorites(int userId, int recipeId)
     {
